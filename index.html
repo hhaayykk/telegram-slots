@@ -727,5 +727,44 @@
             }
         });
     </script>
+
+<script>
+Telegram.WebApp.ready();
+const userId = Telegram.WebApp.initDataUnsafe.user.id;
+
+async function getBalance() {
+  const res = await fetch(`http://localhost:5000/balance?userId=${userId}`);
+  const data = await res.json();
+  document.getElementById("balance").innerText = data.balance;
+}
+
+async function updateBalance(amount) {
+  await fetch("http://localhost:5000/balance/update", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId, amount })
+  });
+  getBalance();
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const balanceEl = document.createElement("p");
+  balanceEl.innerHTML = 'Ваш баланс: <span id="balance">загрузка...</span>';
+  document.body.prepend(balanceEl);
+
+  const updateBtn = document.createElement("button");
+  updateBtn.textContent = "➕ Добавить 10";
+  updateBtn.onclick = () => updateBalance(10);
+  document.body.appendChild(updateBtn);
+
+  const refreshBtn = document.createElement("button");
+  refreshBtn.textContent = "🔄 Обновить баланс";
+  refreshBtn.onclick = getBalance;
+  document.body.appendChild(refreshBtn);
+
+  getBalance();
+});
+</script>
+
 </body>
 </html>
