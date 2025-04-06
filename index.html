@@ -733,19 +733,20 @@ Telegram.WebApp.ready();
 const userId = Telegram.WebApp.initDataUnsafe.user.id;
 
 async function getBalance() {
-  const res = await fetch(`http://localhost:5000/balance?userId=${userId}`);
-  const data = await res.json();
-  document.getElementById("balance").innerText = data.balance;
-}
-
-async function updateBalance(amount) {
-  await fetch("http://localhost:5000/balance/update", {
-    method: "POST",
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userId, amount })
-  });
-  getBalance();
-}
+    const res = await fetch(`https://kaleidoscopic-panda-685dc1.netlify.app/balance?userId=${userId}`);
+    const data = await res.json();
+    document.getElementById("balance").innerText = data.balance;
+  }
+  
+  async function updateBalance(amount) {
+    await fetch("https://kaleidoscopic-panda-685dc1.netlify.app/balance/update", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, amount })
+    });
+    getBalance();
+  }
+  
 
 window.addEventListener("DOMContentLoaded", () => {
   const balanceEl = document.createElement("p");
