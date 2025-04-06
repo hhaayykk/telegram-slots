@@ -111,9 +111,8 @@
         .reel-container {
             background: #1a1a1a;
             border-radius: 8px;
-            width: 100px;
+            width: 30%;
             height: 150px;
-            margin: 0 5px;
             overflow: hidden;
             border: 2px solid #333;
             position: relative;
@@ -122,12 +121,16 @@
         .reel {
             position: absolute;
             top: 0;
+            left: 0;
             width: 100%;
             display: flex;
             flex-direction: column;
+            /* Prevent any horizontal reflow */
+            transform-origin: top center;
         }
 
         .symbol {
+            width: 100%;
             height: 50px;
             display: flex;
             justify-content: center;
@@ -346,14 +349,9 @@
                 padding: 5px;
             }
 
-            .reel-container {
-                width: 90px;
-                height: 135px;
-            }
-
             .symbol {
                 font-size: 1.8em;
-                height: 45px;
+                height: 50px; /* Keep this consistent */
             }
 
             .control-button {
@@ -592,17 +590,24 @@
                 const reelSymbols = generateReelSymbols(middleLineResult[i]);
                 reel.innerHTML = createReelHTML(reelSymbols);
 
+                // Reset the reel position with no transition
                 reel.style.transition = 'none';
                 reel.style.transform = 'translateY(0)';
+
+                // Force reflow to ensure the transition reset takes effect
+                void reel.offsetWidth;
 
                 setTimeout(() => {
                     const spinDuration = 2 + i * 0.5;
                     const stopPosition = -SYMBOL_HEIGHT * CENTER_INDEX;
-                    reel.style.transition = `transform ${spinDuration}s ease-out`;
+                    
+                    // Apply the spin with transition
+                    reel.style.transition = `transform ${spinDuration}s cubic-bezier(0.3, 0.1, 0.3, 1.0)`;
                     reel.style.transform = `translateY(${stopPosition - SYMBOL_HEIGHT * 20}px)`;
 
                     setTimeout(() => {
-                        reel.style.transition = 'transform 0.5s ease-out';
+                        // Apply the final bounce with a different transition
+                        reel.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
                         reel.style.transform = `translateY(${stopPosition}px)`;
                     }, spinDuration * 1000 - 500);
                 }, 100 * i);
@@ -695,14 +700,31 @@
 
         spinButton.addEventListener('click', spinReels);
 
+        // Initialize the reels on page load
         window.addEventListener('load', () => {
+            // Generate initial reel content
             reels.forEach((reel, i) => {
                 const reelSymbols = generateReelSymbols(symbols[Math.floor(Math.random() * symbols.length)]);
                 reel.innerHTML = createReelHTML(reelSymbols);
+                
+                // Initialize position without animation
+                reel.style.transition = 'none';
                 reel.style.transform = `translateY(${-SYMBOL_HEIGHT * CENTER_INDEX}px)`;
             });
+            
             balanceDisplay.textContent = balance;
-            gameContainer.style.display = 'block'; // Показываем игровое окно по умолчанию
+            gameContainer.style.display = 'block'; // Show game container by default
+        });
+
+        // Additional handler to ensure reels remain aligned on resize
+        window.addEventListener('resize', () => {
+            // If not currently spinning, reapply the positioning
+            if (!isSpinning) {
+                reels.forEach(reel => {
+                    reel.style.transition = 'none';
+                    reel.style.transform = `translateY(${-SYMBOL_HEIGHT * CENTER_INDEX}px)`;
+                });
+            }
         });
     </script>
 </body>
