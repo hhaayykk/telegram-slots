@@ -56,6 +56,8 @@
 
         .top-buttons {
             margin-bottom: 15px;
+            text-align: center;
+
         }
 
         .icon-button {
@@ -265,11 +267,20 @@
 
         .win-message {
             color: #FFD700;
-            text-shadow: 0 0 15px #FFD700;
+            text-shadow: 0 0 15px #FFD700, 0 0 25px #FF4500;
+            font-weight: bold;
+            animation: glow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 15px #FFD700, 0 0 25px #FF4500; }
+            50% { text-shadow: 0 0 25px #FFD700, 0 0 35px #FF4500; }
         }
 
         .lose-message {
-            color: #ff6b6b;
+            color: #00cc00;
+            text-shadow: 0 0 10px #00cc00;
+            font-weight: bold;
         }
 
         .nav-bar {
@@ -331,7 +342,7 @@
             border: 3px solid #FFD700;
             border-radius: 15px;
             padding: 20px;
-            text-align: left;
+            text-align: center;
             max-width: 90%;
             width: 350px;
             box-shadow: 0 0 50px #FFD700;
@@ -340,13 +351,14 @@
         }
 
         .modal-header {
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, #FFD700, #FFA500);
+            font-size: 2em;
+            font-weight: 900;
+            background: linear-gradient(to right, #FFD700, #FFFFFF, #FFD700);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 900;
-            text-align: center;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+            text-transform: uppercase;
+            margin-bottom: 15px;
         }
 
         .modal-body {
@@ -383,23 +395,61 @@
         }
 
         .balance-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background: rgba(255, 215, 0, 0.1);
-            padding: 15px;
+            padding: 10px;
             border-radius: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.2);
         }
 
-        .balance-section h4 {
+        .balance-section .slider-container {
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .balance-section input[type="range"] {
+            width: 100%;
+        }
+
+        .balance-section .slider-value {
+            font-size: 1em;
+            margin-top: 5px;
+        }
+
+        .balance-section button {
+            padding: 8px 15px;
+            font-size: 0.9em;
+            width: auto;
+        }
+
+        .balance-info {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid #FFD700;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .balance-info h3 {
             color: #FFD700;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-            text-shadow: 0 0 5px #FFD700;
+            font-size: 1.5em;
+            text-shadow: 0 0 10px #FFD700;
+            margin-bottom: 5px;
+        }
+
+        .balance-info p {
+            font-size: 1.2em;
+            font-weight: bold;
         }
 
         .slider-container {
             position: relative;
-            margin: 20px 0;
+            margin: 10px 0;
         }
 
         input[type="range"] {
@@ -416,8 +466,8 @@
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 25px;
-            height: 25px;
+            width: 20px;
+            height: 20px;
             background: #FFD700;
             border-radius: 50%;
             cursor: pointer;
@@ -430,8 +480,8 @@
         }
 
         input[type="range"]::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
+            width: 20px;
+            height: 20px;
             background: #FFD700;
             border-radius: 50%;
             cursor: pointer;
@@ -446,13 +496,13 @@
         .manual-input {
             display: none;
             width: 100%;
-            padding: 10px;
-            margin-top: 10px;
+            padding: 8px;
+            margin-top: 5px;
             border: 2px solid #FFD700;
             border-radius: 8px;
             background: rgba(0, 0, 0, 0.5);
             color: white;
-            font-size: 1em;
+            font-size: 0.9em;
             text-align: center;
         }
 
@@ -460,7 +510,6 @@
             display: block;
         }
 
-        /* Удаление стрелок в input[type="number"] */
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -468,19 +517,17 @@
         }
 
         input[type="number"] {
-            -moz-appearance: textfield; /* Для Firefox */
+            -moz-appearance: textfield;
         }
 
         .balance-button {
             background: linear-gradient(to bottom, #00cc00, #008000);
             color: white;
-            padding: 12px;
-            font-size: 1.1em;
+            padding: 8px 15px;
+            font-size: 0.9em;
             border: none;
             border-radius: 25px;
             cursor: pointer;
-            width: 100%;
-            margin: 5px 0;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             transition: transform 0.2s, box-shadow 0.2s;
         }
@@ -545,6 +592,16 @@
             .nav-item i {
                 font-size: 1.8em;
             }
+
+            .balance-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .balance-section button {
+                width: 100%;
+                margin-top: 5px;
+            }
         }
     </style>
 </head>
@@ -592,7 +649,7 @@
             <div class="bet-controls">
                 <div class="bet-slider-container">
                     <input type="range" id="betSlider" min="10" max="1000" step="10" value="100">
-                    <div class="slider-value" id="betSliderValue">100 coins</div>
+                    <div class="slider-value" id="betSliderValue">100 <i class="fas fa-coins"></i></div>
                     <input type="number" class="manual-input" id="betManualInput" min="10" max="1000" step="10">
                 </div>
             </div>
@@ -615,11 +672,11 @@
             <h3>Top Players</h3>
             <p>Check out the champions of Royal Slots!</p>
             <ul class="leaderboard-list">
-                <li><span>🥇 PlayerOne</span><span>50,000 coins</span></li>
-                <li><span>🥈 LuckyStar</span><span>45,000 coins</span></li>
-                <li><span>🥉 SlotKing</span><span>40,000 coins</span></li>
-                <li><span>4. SpinMaster</span><span>35,000 coins</span></li>
-                <li><span>5. GoldenAce</span><span>30,000 coins</span></li>
+                <li><span>🥇 PlayerOne</span><span>50,000 <i class="fas fa-coins"></i></span></li>
+                <li><span>🥈 LuckyStar</span><span>45,000 <i class="fas fa-coins"></i></span></li>
+                <li><span>🥉 SlotKing</span><span>40,000 <i class="fas fa-coins"></i></span></li>
+                <li><span>4. SpinMaster</span><span>35,000 <i class="fas fa-coins"></i></span></li>
+                <li><span>5. GoldenAce</span><span>30,000 <i class="fas fa-coins"></i></span></li>
             </ul>
             <p>Spin more to join the elite ranks!</p>
         </div>
@@ -630,29 +687,29 @@
             <h1 class="logo">Balance</h1>
         </div>
         <div class="modal-body">
-            <h3>Your Wallet</h3>
-            <p>Manage your funds with ease and style!</p>
-            
-            <div class="balance-section">
-                <h4>Deposit Funds</h4>
-                <p>Top up your balance to keep the reels spinning!</p>
-                <div class="slider-container">
-                    <input type="range" id="depositSlider" min="10" max="10000" step="10" value="10">
-                    <div class="slider-value" id="depositSliderValue">10 coins</div>
-                    <input type="number" class="manual-input" id="depositManualInput" min="10" max="10000" step="10">
-                </div>
-                <button class="balance-button" onclick="depositFunds()">Deposit Now</button>
+            <div class="balance-info">
+                <h3>Your Balance</h3>
+                <p><span id="currentBalance">5000</span> <i class="fas fa-coins"></i></p>
             </div>
             
             <div class="balance-section">
-                <h4>Withdraw Funds</h4>
-                <p>Cash out your winnings whenever you want!</p>
+                <h4>Deposit</h4>
+                <div class="slider-container">
+                    <input type="range" id="depositSlider" min="10" max="10000" step="10" value="10">
+                    <div class="slider-value" id="depositSliderValue">10 <i class="fas fa-coins"></i></div>
+                    <input type="number" class="manual-input" id="depositManualInput" min="10" max="10000" step="10">
+                </div>
+                <button class="balance-button" onclick="depositFunds()">Add</button>
+            </div>
+            
+            <div class="balance-section">
+                <h4>Withdraw</h4>
                 <div class="slider-container">
                     <input type="range" id="withdrawSlider" min="50" max="10000" step="10" value="50">
-                    <div class="slider-value" id="withdrawSliderValue">50 coins</div>
+                    <div class="slider-value" id="withdrawSliderValue">50 <i class="fas fa-coins"></i></div>
                     <input type="number" class="manual-input" id="withdrawManualInput" min="50" max="10000" step="10">
                 </div>
-                <button class="balance-button withdraw" onclick="withdrawFunds()">Withdraw Now</button>
+                <button class="balance-button withdraw" onclick="withdrawFunds()">Cash Out</button>
             </div>
         </div>
     </div>
@@ -666,7 +723,7 @@
             <p>Team up with friends for bonuses and fun!</p>
             <div class="friend-item">
                 <span>Friend1</span>
-                <span class="friend-status">Online - Sent you 🎁 100 coins</span>
+                <span class="friend-status">Online - Sent you 🎁 100 <i class="fas fa-coins"></i></span>
             </div>
             <div class="friend-item">
                 <span>Friend2</span>
@@ -705,7 +762,7 @@
 
     <div id="paytableModal" class="modal">
         <div class="modal-content">
-            <h2 class="modal-header">WINNING TABLE</h2>
+            <h2 class="modal-header">Paytable</h2>
             <div class="modal-body">
                 <p>7️⃣7️⃣7️⃣ - x50</p>
                 <p>💎💎💎 - x20</p>
@@ -777,19 +834,24 @@
         const withdrawSlider = document.getElementById('withdrawSlider');
         const withdrawSliderValue = document.getElementById('withdrawSliderValue');
         const withdrawManualInput = document.getElementById('withdrawManualInput');
+        const currentBalanceDisplay = document.getElementById('currentBalance');
 
         function updateBetDisplay() {
             currentBet = parseInt(betSlider.value);
-            betSliderValue.textContent = `${currentBet} coins`;
+            betSliderValue.innerHTML = `${currentBet} <i class="fas fa-coins"></i>`;
             betAmountDisplay.textContent = currentBet;
         }
 
         function updateDepositDisplay() {
-            depositSliderValue.textContent = `${depositSlider.value} coins`;
+            depositSliderValue.innerHTML = `${depositSlider.value} <i class="fas fa-coins"></i>`;
         }
 
         function updateWithdrawDisplay() {
-            withdrawSliderValue.textContent = `${withdrawSlider.value} coins`;
+            withdrawSliderValue.innerHTML = `${withdrawSlider.value} <i class="fas fa-coins"></i>`;
+        }
+
+        function updateCurrentBalance() {
+            currentBalanceDisplay.textContent = balance;
         }
 
         function toggleManualInput(slider, input, valueDisplay, min, max) {
@@ -802,7 +864,7 @@
                 if (isNaN(value) || value < min) value = min;
                 if (value > max) value = max;
                 slider.value = value;
-                valueDisplay.textContent = `${value} coins`;
+                valueDisplay.innerHTML = `${value} <i class="fas fa-coins"></i>`;
                 if (slider === betSlider) currentBet = value;
                 if (slider === betSlider) betAmountDisplay.textContent = value;
             }
@@ -851,7 +913,7 @@
 
         function spinReels() {
             if (isSpinning || balance < currentBet) {
-                resultText.textContent = balance < currentBet ? "Not enough balance!" : "Spinning...";
+                resultText.textContent = balance < currentBet ? "Need more coins? Top up! 💰" : "Spinning...";
                 resultText.classList.add('show', 'lose-message');
                 return;
             }
@@ -860,6 +922,7 @@
 
             balance -= currentBet;
             balanceDisplay.textContent = balance;
+            updateCurrentBalance();
             winAmountDisplay.textContent = '0';
             resultText.classList.remove('show', 'win-message', 'lose-message');
             winLine.style.opacity = '0';
@@ -922,8 +985,9 @@
             if (winAmount > 0) {
                 balance += winAmount;
                 balanceDisplay.textContent = balance;
+                updateCurrentBalance();
                 winAmountDisplay.textContent = winAmount;
-                resultText.textContent = `You won ${winAmount} coins!`;
+                resultText.innerHTML = `Jackpot! You scored ${winAmount} <i class="fas fa-coins"></i>! 🎉 Keep it rolling!`;
                 resultText.classList.add('win-message', 'show');
                 
                 winLine.style.opacity = '1';
@@ -943,7 +1007,7 @@
                     winLine.style.animation = 'none';
                 }, 2000);
             } else {
-                resultText.textContent = 'Try again!';
+                resultText.innerHTML = `So close! Spin again for a big win! 🌟`;
                 resultText.classList.add('lose-message', 'show');
             }
         }
@@ -952,7 +1016,8 @@
             const amount = parseInt(depositSlider.value);
             balance += amount;
             balanceDisplay.textContent = balance;
-            alert(`Successfully deposited ${amount} coins!`);
+            updateCurrentBalance();
+            alert(`Successfully deposited ${amount} <i class="fas fa-coins"></i>!`);
         }
 
         function withdrawFunds() {
@@ -963,7 +1028,8 @@
             }
             balance -= amount;
             balanceDisplay.textContent = balance;
-            alert(`Successfully withdrew ${amount} coins!`);
+            updateCurrentBalance();
+            alert(`Successfully withdrew ${amount} <i class="fas fa-coins"></i>!`);
         }
 
         navItems.forEach(item => {
@@ -1001,6 +1067,7 @@
 
         paytableGameButton.addEventListener('click', () => {
             paytableModal.style.display = 'flex';
+            
         });
 
         closePaytable.addEventListener('click', () => {
@@ -1017,6 +1084,7 @@
                 reel.style.transform = `translateY(${-SYMBOL_HEIGHT * CENTER_INDEX}px)`;
             });
             balanceDisplay.textContent = balance;
+            updateCurrentBalance();
             updateBetDisplay();
             updateDepositDisplay();
             updateWithdrawDisplay();
@@ -1041,6 +1109,7 @@
             const res = await fetch(`https://kaleidoscopic-panda-685dc1.netlify.app/balance?userId=${userId}`);
             const data = await res.json();
             document.getElementById("balance").innerText = data.balance;
+            document.getElementById("currentBalance").innerText = data.balance;
         }
         
         async function updateBalance(amount) {
