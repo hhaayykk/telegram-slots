@@ -38,6 +38,7 @@
             margin: 0 auto;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
             border: 2px solid rgba(255, 215, 0, 0.5);
+            display: none; /* Скрыто по умолчанию */
         }
 
         .casino-header .logo {
@@ -293,10 +294,12 @@
             border: 3px solid #FFD700;
             border-radius: 15px;
             padding: 20px;
-            text-align: center;
+            text-align: left;
             max-width: 90%;
-            width: 300px;
+            width: 350px;
             box-shadow: 0 0 50px #FFD700;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .modal-header {
@@ -306,6 +309,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 900;
+            text-align: center;
         }
 
         .modal-body {
@@ -313,20 +317,30 @@
             font-size: 1em;
         }
 
-        .modal-button {
-            background: linear-gradient(to bottom, #FFD700, #B8860B);
-            color: black;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1em;
-            font-weight: bold;
-            border-radius: 20px;
-            cursor: pointer;
-            width: 100%;
+        .about-container {
+            max-width: 400px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 15px;
+            padding: 10px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            display: none; /* Скрыто по умолчанию */
+            text-align: left;
+        }
+
+        .about-container h3 {
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .about-container p {
+            margin-bottom: 15px;
+            line-height: 1.5;
         }
 
         @media (max-width: 480px) {
-            .casino-container {
+            .casino-container, .about-container {
                 max-width: 100%;
                 margin: 0 5px;
                 padding: 5px;
@@ -459,6 +473,23 @@
         </div>
     </div>
 
+    <div class="about-container" id="aboutContainer">
+        <div class="casino-header">
+            <h1 class="logo">About Royal Slots</h1>
+        </div>
+        <div class="modal-body">
+            <h3>About This Project</h3>
+            <p>Royal Slots is a demo casino slot machine game designed for entertainment purposes only. This project was created to showcase a simple yet engaging slot machine experience with a luxurious design. It features a single payline (middle horizontal line) with various winning combinations, as outlined in the Paytable. The game is built using HTML, CSS, and JavaScript, with a focus on responsive design for both desktop and mobile devices.</p>
+            
+            <h3>Terms and Conditions</h3>
+            <p><strong>1. Demo Purpose:</strong> This game is a demonstration and does not involve real money or gambling. All credits and winnings are virtual and cannot be redeemed.</p>
+            <p><strong>2. Age Restriction:</strong> Users must be 18 or older to interact with this demo, as it simulates gambling mechanics.</p>
+            <p><strong>3. No Liability:</strong> The creators of Royal Slots are not responsible for any misuse of this demo or any technical issues that may arise while using it.</p>
+            <p><strong>4. Intellectual Property:</strong> All design elements, code, and assets are the property of the project creators and may not be reproduced without permission.</p>
+            <p><strong>5. Fair Play:</strong> The game uses a random number generator for spins, ensuring fair outcomes within the demo environment.</p>
+        </div>
+    </div>
+
     <script>
         let balance = 5000;
         let currentBet = 100;
@@ -466,7 +497,7 @@
         let symbols = ['🍒', '💎', '7️⃣', '🍋', '🃏', '🔔', '🍇'];
         const SYMBOL_HEIGHT = 50;
         const VISIBLE_LINES = 3;
-        const CENTER_INDEX = 10; // Индекс для средней линии
+        const CENTER_INDEX = 10;
 
         const gameContainer = document.getElementById('gameContainer');
         const navBar = document.getElementById('navBar');
@@ -489,6 +520,7 @@
         const paytableGameButton = document.getElementById('paytableGameButton');
         const paytableModal = document.getElementById('paytableModal');
         const closePaytable = document.getElementById('closePaytable');
+        const aboutContainer = document.getElementById('aboutContainer');
 
         function updateBetDisplay() {
             currentBetDisplay.textContent = currentBet;
@@ -522,9 +554,9 @@
             for (let i = 0; i < CENTER_INDEX; i++) {
                 reelSymbols.push(symbols[Math.floor(Math.random() * symbols.length)]);
             }
-            reelSymbols.push(symbols[Math.floor(Math.random() * symbols.length)]); // Верхняя линия
-            reelSymbols.push(resultSymbol); // Средняя линия
-            reelSymbols.push(symbols[Math.floor(Math.random() * symbols.length)]); // Нижняя линия
+            reelSymbols.push(symbols[Math.floor(Math.random() * symbols.length)]);
+            reelSymbols.push(resultSymbol);
+            reelSymbols.push(symbols[Math.floor(Math.random() * symbols.length)]);
             for (let i = 0; i < 10; i++) {
                 reelSymbols.push(symbols[Math.floor(Math.random() * symbols.length)]);
             }
@@ -550,7 +582,6 @@
             resultText.classList.remove('show', 'win-message', 'lose-message');
             winLine.style.opacity = '0';
 
-            // Генерируем символы только для средней линии
             const middleLineResult = [
                 symbols[Math.floor(Math.random() * symbols.length)],
                 symbols[Math.floor(Math.random() * symbols.length)],
@@ -586,7 +617,7 @@
 
         function checkWin(middleLineResult) {
             let winMultiplier = 0;
-            const [sym1, sym2, sym3] = middleLineResult; // Проверяем только среднюю линию
+            const [sym1, sym2, sym3] = middleLineResult;
 
             console.log(`Middle Line Result: ${sym1} | ${sym2} | ${sym3}`);
 
@@ -614,10 +645,9 @@
                 resultText.textContent = `You won ${winAmount} coins!`;
                 resultText.classList.add('win-message', 'show');
                 winLine.style.opacity = '1';
-                // Подсвечиваем только среднюю линию
                 reels.forEach(reel => {
                     const symbols = reel.querySelectorAll('.symbol');
-                    symbols[CENTER_INDEX + 1].classList.add('win'); // Индекс средней линии
+                    symbols[CENTER_INDEX + 1].classList.add('win');
                 });
                 setTimeout(() => {
                     reels.forEach(reel => {
@@ -640,8 +670,16 @@
 
                 if (tab === 'play') {
                     gameContainer.style.display = 'block';
+                    paytableModal.style.display = 'none';
+                    aboutContainer.style.display = 'none';
+                } else if (tab === 'about') {
+                    gameContainer.style.display = 'none';
+                    paytableModal.style.display = 'none';
+                    aboutContainer.style.display = 'block';
                 } else {
                     gameContainer.style.display = 'none';
+                    paytableModal.style.display = 'none';
+                    aboutContainer.style.display = 'none';
                     alert(`Tab "${tab}" is not implemented in this demo.`);
                 }
             });
@@ -664,6 +702,7 @@
                 reel.style.transform = `translateY(${-SYMBOL_HEIGHT * CENTER_INDEX}px)`;
             });
             balanceDisplay.textContent = balance;
+            gameContainer.style.display = 'block'; // Показываем игровое окно по умолчанию
         });
     </script>
 </body>
