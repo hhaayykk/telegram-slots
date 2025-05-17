@@ -7,7 +7,7 @@ import json
 import os
 
 # Initialize bot
-bot = telebot.TeleBot('5831644271:AAHCYVo9XrON6e9jk2dZVPw7r-01B7f6wnw')
+bot = telebot.TeleBot('TOKEN')
 
 def save_user_log(user_data):
     filename = 'userlog.json'
