@@ -54,7 +54,7 @@ def start(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.add(types.KeyboardButton(
             text="Play Game",
-            web_app=WebAppInfo(url="https://kaleidoscopic-panda-685dc1.netlify.app/")
+            web_app=WebAppInfo(url="WEBAPP LINK")
         ))
         
         bot.send_message(
